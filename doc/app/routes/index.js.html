@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "app\\routes\\index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> express	 	= <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">var</span> router 		= express.Router();
+<span class="hljs-keyword">var</span> passport 	= <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport'</span>);
+
+<span class="hljs-keyword">var</span> User = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/user'</span>);
+<span class="hljs-keyword">var</span> Room = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/room'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Home page</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>If user is already logged in, then redirect to rooms page</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">if</span>(req.isAuthenticated()){
+		res.redirect(<span class="hljs-string">'/rooms'</span>);
+	}
+	<span class="hljs-keyword">else</span>{
+		res.render(<span class="hljs-string">'login'</span>, {
+			<span class="hljs-attr">success</span>: req.flash(<span class="hljs-string">'success'</span>)[<span class="hljs-number">0</span>],
+			<span class="hljs-attr">errors</span>: req.flash(<span class="hljs-string">'error'</span>), 
+			<span class="hljs-attr">showRegisterForm</span>: req.flash(<span class="hljs-string">'showRegisterForm'</span>)[<span class="hljs-number">0</span>]
+		});
+	}
+});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Login</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.post(<span class="hljs-string">'/login'</span>, passport.authenticate(<span class="hljs-string">'local'</span>, { 
+	<span class="hljs-attr">successRedirect</span>: <span class="hljs-string">'/rooms'</span>, 
+	<span class="hljs-attr">failureRedirect</span>: <span class="hljs-string">'/'</span>,
+	<span class="hljs-attr">failureFlash</span>: <span class="hljs-literal">true</span>
+}));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Register via username and password</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.post(<span class="hljs-string">'/register'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+
+	<span class="hljs-keyword">var</span> credentials = {<span class="hljs-string">'username'</span>: req.body.username, <span class="hljs-string">'password'</span>: req.body.password };
+
+	<span class="hljs-keyword">if</span>(credentials.username === <span class="hljs-string">''</span> || credentials.password === <span class="hljs-string">''</span>){
+		req.flash(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Missing credentials'</span>);
+		req.flash(<span class="hljs-string">'showRegisterForm'</span>, <span class="hljs-literal">true</span>);
+		res.redirect(<span class="hljs-string">'/'</span>);
+	}<span class="hljs-keyword">else</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Check if the username already exists for non-social account</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">		User.findOne({<span class="hljs-string">'username'</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'^'</span> + req.body.username + <span class="hljs-string">'$'</span>, <span class="hljs-string">'i'</span>), <span class="hljs-string">'socialId'</span>: <span class="hljs-literal">null</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, user</span>)</span>{
+			<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+			<span class="hljs-keyword">if</span>(user){
+				req.flash(<span class="hljs-string">'error'</span>, <span class="hljs-string">'Username already exists.'</span>);
+				req.flash(<span class="hljs-string">'showRegisterForm'</span>, <span class="hljs-literal">true</span>);
+				res.redirect(<span class="hljs-string">'/'</span>);
+			}<span class="hljs-keyword">else</span>{
+				User.create(credentials, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, newUser</span>)</span>{
+					<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+					req.flash(<span class="hljs-string">'success'</span>, <span class="hljs-string">'Your account has been created. Please log in.'</span>);
+					res.redirect(<span class="hljs-string">'/'</span>);
+				});
+			}
+		});
+	}
+});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Social Authentication routes</p>
+<ol>
+<li>Login via Facebook</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/auth/facebook'</span>, passport.authenticate(<span class="hljs-string">'facebook'</span>));
+router.get(<span class="hljs-string">'/auth/facebook/callback'</span>, passport.authenticate(<span class="hljs-string">'facebook'</span>, {
+		<span class="hljs-attr">successRedirect</span>: <span class="hljs-string">'/rooms'</span>,
+		<span class="hljs-attr">failureRedirect</span>: <span class="hljs-string">'/'</span>,
+		<span class="hljs-attr">failureFlash</span>: <span class="hljs-literal">true</span>
+}));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<ol start="2">
+<li>Login via Twitter</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/auth/twitter'</span>, passport.authenticate(<span class="hljs-string">'twitter'</span>));
+router.get(<span class="hljs-string">'/auth/twitter/callback'</span>, passport.authenticate(<span class="hljs-string">'twitter'</span>, {
+		<span class="hljs-attr">successRedirect</span>: <span class="hljs-string">'/rooms'</span>,
+		<span class="hljs-attr">failureRedirect</span>: <span class="hljs-string">'/'</span>,
+		<span class="hljs-attr">failureFlash</span>: <span class="hljs-literal">true</span>
+}));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Rooms</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/rooms'</span>, [User.isAuthenticated, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+	Room.find(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, rooms</span>)</span>{
+		<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+		res.render(<span class="hljs-string">'rooms'</span>, { rooms });
+	});
+}]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Chat Room</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/chat/:id'</span>, [User.isAuthenticated, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+	<span class="hljs-keyword">var</span> roomId = req.params.id;
+	Room.findById(roomId, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, room</span>)</span>{
+		<span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">throw</span> err;
+		<span class="hljs-keyword">if</span>(!room){
+			<span class="hljs-keyword">return</span> next(); 
+		}
+		res.render(<span class="hljs-string">'chatroom'</span>, { <span class="hljs-attr">user</span>: req.user, <span class="hljs-attr">room</span>: room });
+	});
+	
+}]);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Logout</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">router.get(<span class="hljs-string">'/logout'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res, next</span>) </span>{
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>remove the req.user property and clear the login session</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	req.logout();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>destroy session data</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	req.session = <span class="hljs-literal">null</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>redirect to homepage</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	res.redirect(<span class="hljs-string">'/'</span>);
+});
+
+<span class="hljs-built_in">module</span>.exports = router;
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

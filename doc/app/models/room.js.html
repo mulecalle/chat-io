@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>room.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "app\\models\\room.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>room.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> roomModel   = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../database'</span>).models.room;
+<span class="hljs-keyword">var</span> User 		= <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/user'</span>);
+
+<span class="hljs-keyword">var</span> create = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, callback</span>)</span>{
+	<span class="hljs-keyword">var</span> newRoom = <span class="hljs-keyword">new</span> roomModel(data);
+	newRoom.save(callback);
+};
+
+<span class="hljs-keyword">var</span> find = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, callback</span>)</span>{
+	roomModel.find(data, callback);
+}
+
+<span class="hljs-keyword">var</span> findOne = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, callback</span>)</span>{
+	roomModel.findOne(data, callback);
+}
+
+<span class="hljs-keyword">var</span> findById = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">id, callback</span>)</span>{
+	roomModel.findById(id, callback);
+}
+
+<span class="hljs-keyword">var</span> findByIdAndUpdate = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id, data, callback</span>)</span>{
+	roomModel.findByIdAndUpdate(id, data, { <span class="hljs-attr">new</span>: <span class="hljs-literal">true</span> }, callback);
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Add a user along with the corresponding socket to the passed room</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> addUser = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">room, socket, callback</span>)</span>{
+	
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Get current user's id</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">var</span> userId = socket.request.session.passport.user;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Push a new connection object(i.e. {userId + socketId})</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">var</span> conn = { <span class="hljs-attr">userId</span>: userId, <span class="hljs-attr">socketId</span>: socket.id};
+	room.connections.push(conn);
+	room.save(callback);
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Get all users in a room</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> getUsers = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">room, socket, callback</span>)</span>{
+
+	<span class="hljs-keyword">var</span> users = [], vis = {}, cunt = <span class="hljs-number">0</span>;
+	<span class="hljs-keyword">var</span> userId = socket.request.session.passport.user;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Loop on room's connections, Then:</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	room.connections.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">conn</span>)</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<ol>
+<li>Count the number of connections of the current user(using one or more sockets) to the passed room.</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">		<span class="hljs-keyword">if</span>(conn.userId === userId){
+			cunt++;
+		}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<ol start="2">
+<li>Create an array(i.e. users) contains unique users' ids</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">		<span class="hljs-keyword">if</span>(!vis[conn.userId]){
+			users.push(conn.userId);
+		}
+		vis[conn.userId] = <span class="hljs-literal">true</span>;
+	});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Loop on each user id, Then:
+Get the user object by id, and assign it to users array.
+So, users array will hold users' objects instead of ids.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">var</span> loadedUsers = <span class="hljs-number">0</span>;		
+	users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userId, i</span>)</span>{
+		User.findById(userId, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, user</span>)</span>{
+			<span class="hljs-keyword">if</span> (err) { <span class="hljs-keyword">return</span> callback(err); }
+			users[i] = user;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>fire callback when all users are loaded (async) from database</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">			<span class="hljs-keyword">if</span>(++loadedUsers === users.length){
+				<span class="hljs-keyword">return</span> callback(<span class="hljs-literal">null</span>, users, cunt);
+			}
+		});
+	});
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Remove a user along with the corresponding socket from a room</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> removeUser = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">socket, callback</span>)</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Get current user's id</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">var</span> userId = socket.request.session.passport.user;
+
+	find(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, rooms</span>)</span>{
+		<span class="hljs-keyword">if</span>(err) { <span class="hljs-keyword">return</span> callback(err); }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Loop on each room, Then:</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">		rooms.every(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">room</span>)</span>{
+			<span class="hljs-keyword">var</span> pass = <span class="hljs-literal">true</span>, cunt = <span class="hljs-number">0</span>, target = <span class="hljs-number">0</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>For every room,</p>
+<ol>
+<li>Count the number of connections of the current user(using one or more sockets).</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">			room.connections.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">conn, i</span>)</span>{
+				<span class="hljs-keyword">if</span>(conn.userId === userId){
+					cunt++;
+				}
+				<span class="hljs-keyword">if</span>(conn.socketId === socket.id){
+					pass = <span class="hljs-literal">false</span>, target = i;
+				}
+			});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<ol start="2">
+<li>Check if the current room has the disconnected socket,
+If so, then, remove the current connection object, and terminate the loop.</li>
+</ol>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">			<span class="hljs-keyword">if</span>(!pass) {
+				room.connections.id(room.connections[target]._id).remove();
+				room.save(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>)</span>{
+					callback(err, room, userId, cunt);
+				});
+			}
+
+			<span class="hljs-keyword">return</span> pass;
+		});
+	});
+}
+
+<span class="hljs-built_in">module</span>.exports = { 
+	create, 
+	find, 
+	findOne, 
+	findById, 
+	addUser, 
+	getUsers, 
+	removeUser 
+};
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+Please give your answers to these questions. Think through them, but keep answers concise.
+Don't worry if you don't have all the answers off the top of your head. We’re also very much looking for your ability to reason about and work through these sorts of problems.
+
+------------------------------------------------------------------------------------------------------------
+- What sort of parallelization for automated tests have you implemented in your current or previous roles? -
+- Please give a few sentences regarding your technical implementation and any major challenges you faced.  -
+------------------------------------------------------------------------------------------------------------
+
+Web UI parallelization is always a bit tricky despite the implementation set up, run multiples specs in parallel requires
+the fact that all of these specs are thread safe, that means that every action did during the test should be completely
+agnostic from others actions done by the other tests in parallel.
+So mainly the challenges here are two, first the parallelization schema and then the fact that the tests cases are robust enough to not overlap.
+
+----------------------------------------------------------------------------------------------------------------
+- What are some different ways to measure automation coverage?                                                 -
+- How do you ensure you maintain sufficient coverage as the product evolves and the number of users increases? -
+----------------------------------------------------------------------------------------------------------------
+
+In order to measure automation coverage I'm familiar doing:
+- Map all the components of the application.
+- Create a list with the P0 and P1 for each of us.
+- Finally the automation coverage will be kind of the amount of P0 and P1 automated.
+
+In order to keep a good automation coverage it's a good idea to have someone from the automation team involved in the
+new feature develop cycle.
+
+In order to keep a good reliability and usability of a product it's a good idea to run periodically load test in order to measure how the throughput,
+CPU, memory and the response time handle different samples of active users, basically we want to identify our systems threshold.
+Then by using some kind of analytics identify which is the active users of the sites. If the threshold is lower than the current active users it will be required to modify
+something in our design in order to support a higher amount of users.
+
+--------------------------------------------------------------------------------------------
+- Have you implemented continuous integration for your automated tests in a previous role? -
+- What tools and methodology did you use?																									 -
+--------------------------------------------------------------------------------------------
+
+As member of the engineer productivity team, we implemented:
+
+	For WEB UI artifacts:
+		- To handle source code version control we used GIT (BitBucker).
+		- Before merging into baseline (AKA master branch) a pull request must be created. A PR should satisfy:
+			- Get pair review approvals.
+			- Static analysis using SonarQube, basically linting, code smells and coverage.
+			- Unit test in green.
+
+	For API artifacts:
+		- To handle source code version control we used GIT (BitBucker).
+		- Before merging into baseline (AKA master branch) a pull request must be created. A PR should satisfy:
+			- Get pair review approvals.
+			- Static analysis using SonarQube, basically code smells and coverage.
+			- Unit test.
+			- Integration test, to do that some dependencies/mocks are hosted in a docker under a jenkins job.
+
+We did also implemented continuous delivery, once the code is merged into master the artifact is deployed in an environment and some test are executed, e2e for UI and data driven test for API.
+For UI we used Jenkins + SauceLab, for API just jenkins.
+
+So mainly the tools used are:
+	- Git
+	- SonarQube
+	- Docker
+	- Jenkins
+	- SauceLab
+
+------------------------------------------------------------------------------------------------------------------------------
+- The goal of automation is to help us release faster, with higher quality, and help other teams.                            -
+- At a growing company, there can be a lot of new pieces of functionality as well major refactors to existing functionality. -
+- How do you prioritize automation needs across teams?                                                                       -
+------------------------------------------------------------------------------------------------------------------------------
+
+In order to prioritize different teams I will take into account the following variables:
+	- Automation cost, is it a new feature of just an small refactor?
+	- Automation roi, which is the impact to have a p0 in production for team A vs team B? Variables here may be:
+			- Has this service handle users sensitive data?
+			- Is this a core service for my organization?
+			- Is there a sla contract for this service?
+			- How many users are using that service in production?
+			- How much time and cost will have a hotfix?
+	- Existing automation coverage? Unit, integration, e2e?

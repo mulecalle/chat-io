@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "app\\config\\index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> init = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+	<span class="hljs-keyword">if</span>(process.env.NODE_ENV === <span class="hljs-string">'production'</span>) {
+		<span class="hljs-keyword">var</span> redisURI 		= <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>).parse(process.env.REDIS_URL);
+		<span class="hljs-keyword">var</span> redisPassword 	= redisURI.auth.split(<span class="hljs-string">':'</span>)[<span class="hljs-number">1</span>];
+		<span class="hljs-keyword">return</span> {
+			<span class="hljs-attr">db</span>: {
+				<span class="hljs-attr">username</span>: process.env.dbUsername,
+				<span class="hljs-attr">password</span>: process.env.dbPassword,
+				<span class="hljs-attr">host</span>: process.env.dbHost,
+				<span class="hljs-attr">port</span>: process.env.dbPort,
+				<span class="hljs-attr">name</span>: process.env.dbName
+			},
+			<span class="hljs-attr">sessionSecret</span>: process.env.sessionSecret,
+			<span class="hljs-attr">facebook</span>: {
+				<span class="hljs-attr">clientID</span>: process.env.facebookClientID,
+				<span class="hljs-attr">clientSecret</span>: process.env.facebookClientSecret,
+				<span class="hljs-attr">callbackURL</span>: <span class="hljs-string">"/auth/facebook/callback"</span>,
+				<span class="hljs-attr">profileFields</span>: [<span class="hljs-string">'id'</span>, <span class="hljs-string">'displayName'</span>, <span class="hljs-string">'photos'</span>]
+			},
+			<span class="hljs-attr">twitter</span>:{
+				<span class="hljs-attr">consumerKey</span>: process.env.twitterConsumerKey,
+				<span class="hljs-attr">consumerSecret</span>: process.env.twitterConsumerSecret,
+				<span class="hljs-attr">callbackURL</span>: <span class="hljs-string">"/auth/twitter/callback"</span>,
+				<span class="hljs-attr">profileFields</span>: [<span class="hljs-string">'id'</span>, <span class="hljs-string">'displayName'</span>, <span class="hljs-string">'photos'</span>]
+			},
+			<span class="hljs-attr">redis</span>: {
+				<span class="hljs-attr">host</span>: redisURI.hostname,
+				<span class="hljs-attr">port</span>: redisURI.port,
+				<span class="hljs-attr">password</span>: redisPassword
+			}
+		}
+	}
+	<span class="hljs-keyword">else</span> {
+		<span class="hljs-keyword">return</span> <span class="hljs-built_in">require</span>(<span class="hljs-string">'./config.json'</span>);
+	}
+}
+
+<span class="hljs-built_in">module</span>.exports = init();
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

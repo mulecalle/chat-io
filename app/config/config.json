@@ -1,0 +1,27 @@
+{
+	"db": {
+		"username": "adminAccount",
+		"password": "x4dAKKSXiQ8F9rm",
+		"host": "ds123645.mlab.com",
+		"port": "23645",
+		"name": "asapp_db"
+	},
+	"sessionSecret": "<RandomString>",
+	"facebook": {
+		"clientID": "<AppID>",
+		"clientSecret": "<AppSecret>",
+		"callbackURL": "/auth/facebook/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"twitter": {
+		"consumerKey": "<ConsumerKey>",
+		"consumerSecret": "<ConsumerSecret>",
+		"callbackURL": "/auth/twitter/callback",
+		"profileFields": ["id", "displayName", "photos"]
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": 6379,
+		"password": ""
+	}
+}

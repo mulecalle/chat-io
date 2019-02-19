@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "app\\auth\\index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> config 		= <span class="hljs-built_in">require</span>(<span class="hljs-string">'../config'</span>);
+<span class="hljs-keyword">var</span> passport 	= <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport'</span>);
+<span class="hljs-keyword">var</span> logger 		= <span class="hljs-built_in">require</span>(<span class="hljs-string">'../logger'</span>);
+
+<span class="hljs-keyword">var</span> LocalStrategy 		= <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport-local'</span>).Strategy;
+<span class="hljs-keyword">var</span> FacebookStrategy  	= <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport-facebook'</span>).Strategy;
+<span class="hljs-keyword">var</span> TwitterStrategy  	= <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport-twitter'</span>).Strategy;
+
+<span class="hljs-keyword">var</span> User = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../models/user'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Encapsulates all code for authentication
+Either by using username and password, or by using social accounts</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> init = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Serialize and Deserialize user instances to and from the session.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	passport.serializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user, done</span>) </span>{
+		done(<span class="hljs-literal">null</span>, user.id);
+	});
+
+	passport.deserializeUser(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id, done</span>) </span>{
+		User.findById(id, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, user</span>) </span>{
+			done(err, user);
+		});
+	});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Plug-in Local Strategy</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	passport.use(<span class="hljs-keyword">new</span> LocalStrategy(
+	  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username, password, done</span>) </span>{
+	    User.findOne({ <span class="hljs-attr">username</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(username, <span class="hljs-string">'i'</span>), <span class="hljs-attr">socialId</span>: <span class="hljs-literal">null</span> }, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, user</span>) </span>{
+	      <span class="hljs-keyword">if</span> (err) { <span class="hljs-keyword">return</span> done(err); }
+
+	      <span class="hljs-keyword">if</span> (!user) {
+	        <span class="hljs-keyword">return</span> done(<span class="hljs-literal">null</span>, <span class="hljs-literal">false</span>, { <span class="hljs-attr">message</span>: <span class="hljs-string">'Incorrect username or password.'</span> });
+	      }
+
+	      user.validatePassword(password, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, isMatch</span>) </span>{
+	        	<span class="hljs-keyword">if</span> (err) { <span class="hljs-keyword">return</span> done(err); }
+	        	<span class="hljs-keyword">if</span> (!isMatch){
+	        		<span class="hljs-keyword">return</span> done(<span class="hljs-literal">null</span>, <span class="hljs-literal">false</span>, { <span class="hljs-attr">message</span>: <span class="hljs-string">'Incorrect username or password.'</span> });
+	        	}
+	        	<span class="hljs-keyword">return</span> done(<span class="hljs-literal">null</span>, user);
+	      });
+
+	    });
+	  }
+	));
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>In case of Facebook, tokenA is the access token, while tokenB is the refersh token.
+In case of Twitter, tokenA is the token, whilet tokenB is the tokenSecret.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	<span class="hljs-keyword">var</span> verifySocialAccount = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">tokenA, tokenB, data, done</span>) </span>{
+		User.findOrCreate(data, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, user</span>) </span>{
+	      	<span class="hljs-keyword">if</span> (err) { <span class="hljs-keyword">return</span> done(err); }
+			<span class="hljs-keyword">return</span> done(err, user); 
+		});
+	};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Plug-in Facebook &amp; Twitter Strategies</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">	passport.use(<span class="hljs-keyword">new</span> FacebookStrategy(config.facebook, verifySocialAccount));
+	passport.use(<span class="hljs-keyword">new</span> TwitterStrategy(config.twitter, verifySocialAccount));
+
+	<span class="hljs-keyword">return</span> passport;
+}
+	
+<span class="hljs-built_in">module</span>.exports = init();
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

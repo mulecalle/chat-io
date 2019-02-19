@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>README.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "README.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#chat.io">chat.io</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#index">Index</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#demo">Demo</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#features">Features</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#installation">Installation</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#running-locally">Running Locally</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#deploying-to-heroku">Deploying to Heroku</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#how-it-works">How It Works</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#setup-configurations">Setup Configurations</a>
+      </div>
+
+      <div class="heading h4">
+        <a href="#mongodb-and-mongolab">MongoDB &amp;amp; MongoLab</a>
+      </div>
+
+      <div class="heading h4">
+        <a href="#facebook-and-twitter">Facebook &amp;amp; Twitter</a>
+      </div>
+
+      <div class="heading h5">
+        <a href="#registering-the-app-on-facebook">Registering the app on Facebook</a>
+      </div>
+
+      <div class="heading h5">
+        <a href="#registering-the-app-on-twitter">Registering the app on Twitter</a>
+      </div>
+
+      <div class="heading h5">
+        <a href="#the-callback-url">The Callback URL</a>
+      </div>
+
+      <div class="heading h4">
+        <a href="#session">Session</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#database">Database</a>
+      </div>
+
+      <div class="heading h4">
+        <a href="#schemas">Schemas</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#models">Models</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#session-1">Session</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#user-authentication">User Authentication</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#sockets">Sockets</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#logger">Logger</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#support">Support </a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#contribute">Contribute </a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#license">License </a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><p><img src="https://raw.githubusercontent.com/OmarElGabry/chat.io/master/public/img/chat.io.gif" alt="Screenshot"></p>
+<div class="pilwrap" id="chat.io">
+  <h1>
+    <a href="#chat.io" name="chat.io" class="pilcrow"></a>
+chat.io
+  </h1>
+</div>
+<p><a href="https://www.versioneye.com/user/projects/57d746d1df40d0004a4a9e21"><img src="https://www.versioneye.com/user/projects/57d746d1df40d0004a4a9e21/badge.svg?style=flat-square" alt="Dependency Status"></a>
+<a href="https://scrutinizer-ci.com/g/OmarElGabry/chat.io/?branch=master"><img src="https://scrutinizer-ci.com/g/OmarElGabry/chat.io/badges/quality-score.png?b=master" alt="Scrutinizer Code Quality"></a>
+<a href="https://codeclimate.com/github/OmarElGabry/chat.io"><img src="https://codeclimate.com/github/OmarElGabry/chat.io/badges/gpa.svg" alt="Code Climate"></a></p>
+<p>A Real Time Chat Application built using Node.js, Express, Mongoose, Socket.io, Passport, &amp; Redis.</p>
+<div class="pilwrap" id="index">
+  <h2>
+    <a href="#index" name="index" class="pilcrow"></a>
+Index
+  </h2>
+</div>
+<ul>
+<li><a href="#demo.html">Demo</a></li>
+<li><a href="#features.html">Features</a></li>
+<li><a href="#installation.html">Installation</a></li>
+<li><a href="#how-it-works.html">How It Works</a></li>
+<li><a href="#support.html">Support</a></li>
+<li><a href="#contribute.html">Contribute</a></li>
+<li><a href="#license.html">License</a></li>
+</ul>
+<div class="pilwrap" id="demo">
+  <h2>
+    <a href="#demo" name="demo" class="pilcrow"></a>
+Demo<a name="demo"></a>
+  </h2>
+</div>
+<p>Check <a href="http://chatio.herokuapp.com/">Demo</a></p>
+<div class="pilwrap" id="features">
+  <h2>
+    <a href="#features" name="features" class="pilcrow"></a>
+Features<a name="features"></a>
+  </h2>
+</div>
+<ul>
+<li>Uses Express as the application Framework.</li>
+<li>Manages Sessions using <a href="https://github.com/expressjs/session">express-session</a> package.</li>
+<li>Authenticates via username and password using <a href="https://github.com/jaredhanson/passport">Passport</a>.</li>
+<li>Passwords are hashed using <a href="https://github.com/shaneGirish/bcrypt-nodejs">bcrypt-nodejs</a> package.</li>
+<li>Social Authentication via Facebook and Twitter using <a href="https://github.com/jaredhanson/passport">Passport</a>.</li>
+<li>Real-time communication between a client and a server using <a href="https://github.com/socketio/socket.io">Socket.io</a>.</li>
+<li>Uses <a href="https://github.com/mongodb/mongo">MongoDB</a>, <a href="https://github.com/Automattic/mongoose">Mongoose</a> and <a href="https://mlab.com/">MongoLab(mLab)</a> for storing and querying data.</li>
+<li>Stores session in a <a href="https://github.com/mongodb/mongo">MongoDB</a> using <a href="https://github.com/kcbanner/connect-mongo">connect-mongo</a>; a MongoDB-based session store.</li>
+<li>Uses <a href="https://github.com/antirez/redis">Redis</a> as an Adapter for <a href="https://github.com/socketio/socket.io">Socket.io</a>.</li>
+<li>Logging Errors and Exceptions using <a href="https://github.com/winstonjs/winston">Winston</a>.</li>
+</ul>
+<div class="pilwrap" id="installation">
+  <h2>
+    <a href="#installation" name="installation" class="pilcrow"></a>
+Installation<a name="installation"></a>
+  </h2>
+</div>
+<div class="pilwrap" id="running-locally">
+  <h3>
+    <a href="#running-locally" name="running-locally" class="pilcrow"></a>
+Running Locally
+  </h3>
+</div>
+<p>Make sure you have <a href="https://nodejs.org/">Node.js</a> and <a href="https://www.npmjs.com/">npm</a> installed.</p>
+<ol>
+<li>
+<p>Clone or Download the repository</p>
+<pre><code>$ git clone https://github.com/OmarElGabry/chat.io.git
+$ cd chat.io
+</code></pre>
+</li>
+<li>
+<p>Install Dependencies</p>
+<pre><code>$ npm install
+</code></pre>
+</li>
+<li>
+<p>Edit configuration file in <em>app/config/config.json</em> with your credentials(see <a href="#configurations.html">Setup Configurations</a>).</p>
+</li>
+<li>
+<p>Download and Install <a href="http://redis.io/download">Redis</a>.</p>
+</li>
+<li>
+<p>Running Redis Server(as Admin)</p>
+<pre><code>$ redis-server
+</code></pre>
+</li>
+<li>
+<p>Start the application</p>
+<pre><code>$ npm start
+</code></pre>
+</li>
+</ol>
+<p>Your app should now be running on <a href="http://localhost:3000/">localhost:3000</a>.</p>
+<div class="pilwrap" id="deploying-to-heroku">
+  <h3>
+    <a href="#deploying-to-heroku" name="deploying-to-heroku" class="pilcrow"></a>
+Deploying to Heroku
+  </h3>
+</div>
+<p>Make sure you have the <a href="https://toolbelt.heroku.com/">Heroku Toolbelt</a> installed.</p>
+<ol>
+<li>
+<p>Create a new Heroku application, and push your chat application to a Git remote repository</p>
+<pre><code>$ heroku create
+$ git push heroku master
+</code></pre>
+<p>or</p>
+<p><a href="https://heroku.com/deploy"><img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy to Heroku"></a></p>
+</li>
+<li>
+<p>Now, you need to set up configuration variables on Heroku.</p>
+<ol>
+<li>Go to Settings -&gt; Reveal Config Vars.</li>
+<li>Add configuration variables. All needed variables are inside <em>app/config/index.js</em>.
+Typically, these are the configuration variables you need to assign:
+<code>{ dbURI, sessionSecret, facebookClientID, facebookClientSecret, twitterConsumerKey, twitterConsumerSecret }</code>(see <a href="#configurations.html">Setup Configurations</a>).</li>
+</ol>
+</li>
+<li>
+<p>One last step is to add <a href="http://redis.io/">Redis</a> as an Add-on on Heroku.</p>
+<ol>
+<li>Go to Resources -&gt; Add-ons</li>
+<li>Select Heroku Redis</li>
+</ol>
+<blockquote>
+<p>You need to setup a billing account even if the add-on is free.</p>
+</blockquote>
+</li>
+<li>
+<p>Open your chat application in the browser</p>
+<pre><code>$ heroku open
+</code></pre>
+</li>
+</ol>
+<div class="pilwrap" id="how-it-works">
+  <h2>
+    <a href="#how-it-works" name="how-it-works" class="pilcrow"></a>
+How It Works<a name="how-it-works"></a>
+  </h2>
+</div>
+<div class="pilwrap" id="setup-configurations">
+  <h3>
+    <a href="#setup-configurations" name="setup-configurations" class="pilcrow"></a>
+Setup Configurations<a name="configurations"></a>
+  </h3>
+</div>
+<p>The configurations on production will be assigned from Environment Variables on Heroku, while the development configurations reside inside <em>app/config/config.json</em> file.</p>
+<div class="pilwrap" id="mongodb-and-mongolab">
+  <h4>
+    <a href="#mongodb-and-mongolab" name="mongodb-and-mongolab" class="pilcrow"></a>
+MongoDB &amp; MongoLab
+  </h4>
+</div>
+<p>You need to create a database on MongoLab, then create a database user, get the <code>MongoDB URI</code>, and assign it to <code>dbURI</code>.</p>
+<div class="pilwrap" id="facebook-and-twitter">
+  <h4>
+    <a href="#facebook-and-twitter" name="facebook-and-twitter" class="pilcrow"></a>
+Facebook &amp; Twitter
+  </h4>
+</div>
+<p>You need to register a new application on both Facebook and Twitter to get your tokens by which users can grant access to your application, and login using their social accounts.</p>
+<div class="pilwrap" id="registering-the-app-on-facebook">
+  <h5>
+    <a href="#registering-the-app-on-facebook" name="registering-the-app-on-facebook" class="pilcrow"></a>
+Registering the app on Facebook
+  </h5>
+</div>
+<ol>
+<li>Go to <a href="https://developers.facebook.com/">Facebook Developers</a></li>
+<li>Add new app, and fill the required information.</li>
+<li>Get your <code>App ID</code>, <code>App Secret</code>.</li>
+<li>Go to Add Product -&gt; Facebook Login -&gt; Valid OAuth redirect URIs</li>
+<li>Add Valid Callback URIs</li>
+<li>Go to App Review -&gt; Make your application public.</li>
+</ol>
+<p>Now, you can assign the <code>App ID</code> to <code>facebookClientID</code>, and <code>App Secret</code> to <code>facebookClientSecret</code>.</p>
+<div class="pilwrap" id="registering-the-app-on-twitter">
+  <h5>
+    <a href="#registering-the-app-on-twitter" name="registering-the-app-on-twitter" class="pilcrow"></a>
+Registering the app on Twitter
+  </h5>
+</div>
+<ol>
+<li>Go to <a href="https://apps.twitter.com/">Twitter Apps</a></li>
+<li>Create new app, and fill the required information.</li>
+<li>Add Website &amp; Callback URL</li>
+<li>Get your <code>Consumer Key</code>, <code>Consumer Secret</code>.</li>
+</ol>
+<p>Now, you can assign the <code>Consumer Key</code> to <code>twitterConsumerKey</code>, and <code>Consumer Secret</code> to <code>twitterConsumerSecret</code>.</p>
+<div class="pilwrap" id="the-callback-url">
+  <h5>
+    <a href="#the-callback-url" name="the-callback-url" class="pilcrow"></a>
+The Callback URL
+  </h5>
+</div>
+<ul>
+<li>
+<p>It can point back to your localhost; <em><a href="http://localhost:3000/auth/facebook/callback">http://localhost:3000/auth/facebook/callback</a></em></p>
+</li>
+<li>
+<p>When deploy to Heroku, you will have something look like this; <em><a href="http://my-chat-app.herokuapp.com/auth/facebook/callback">http://my-chat-app.herokuapp.com/auth/facebook/callback</a></em></p>
+</li>
+</ul>
+<div class="pilwrap" id="session">
+  <h4>
+    <a href="#session" name="session" class="pilcrow"></a>
+Session
+  </h4>
+</div>
+<p>The session needs a random string to make sure the session id in the browser is random. That random string is used to encrypt the session id in the browser, <em>Why?</em> To prevent session id guessing.</p>
+<div class="pilwrap" id="database">
+  <h3>
+    <a href="#database" name="database" class="pilcrow"></a>
+Database<a name="database"></a>
+  </h3>
+</div>
+<p>Mongoose is used to interact with a MongoDB that's hosted by MongoLab.</p>
+<div class="pilwrap" id="schemas">
+  <h4>
+    <a href="#schemas" name="schemas" class="pilcrow"></a>
+Schemas
+  </h4>
+</div>
+<p>There are two schemas; users and rooms.</p>
+<p>Each user has a username, passowrd, social Id, and picture. If the user is logged via username and password, then social Id has to be null, and the if logged in via a social account, then the password will be null.</p>
+<p>Each room has a title, and array of connections. Each item in the connections array represents a user connected through a unique socket; object composed of <em>{userId + socketId}</em>. Both of them together are unique.</p>
+<div class="pilwrap" id="models">
+  <h3>
+    <a href="#models" name="models" class="pilcrow"></a>
+Models<a name="models"></a>
+  </h3>
+</div>
+<p>Each model wraps Mongoose Model object, overrides and provides some methods. There are two models; User and Room.</p>
+<div class="pilwrap" id="session-1">
+  <h3>
+    <a href="#session-1" name="session-1" class="pilcrow"></a>
+Session<a name="session"></a>
+  </h3>
+</div>
+<p>Session in Express applications are best managed using <a href="https://github.com/expressjs/session">express-session</a> package. Session data are stored locally on your computer, while it's stored in the database on the production environment. Session data will be deleted upon logging out.</p>
+<div class="pilwrap" id="user-authentication">
+  <h3>
+    <a href="#user-authentication" name="user-authentication" class="pilcrow"></a>
+User Authentication<a name="auth"></a>
+  </h3>
+</div>
+<p>User can login using either a username and password, or login via a social account. User authentication is done using <a href="https://github.com/jaredhanson/passport">Passport</a>. Passport has extensive, and step-by-step <a href="http://passportjs.org/docs/">documentation</a> on how to implement each way of authentication.</p>
+<div class="pilwrap" id="sockets">
+  <h3>
+    <a href="#sockets" name="sockets" class="pilcrow"></a>
+Sockets<a name="sockets"></a>
+  </h3>
+</div>
+<p>Having an active connection opened between the client and the server so client can send and receive data. This allows real-time communication using TCP sockets. This is made possible by <a href="https://github.com/socketio/socket.io">Socket.io</a>.</p>
+<p>The client starts by connecting to the server through a socket(maybe also assigned to a specific namespace). Once connections is successful, client and server can emit and listen to events.</p>
+<p>There are two namespaces used; <code>/rooms</code> and <code>/chatroom</code>.</p>
+<div class="pilwrap" id="logger">
+  <h3>
+    <a href="#logger" name="logger" class="pilcrow"></a>
+Logger<a name="logger"></a>
+  </h3>
+</div>
+<p>And It doesn't go without saying, you need to monitor your application. <a href="https://github.com/winstonjs/winston">Winston</a> can log and catch Uncaught Exceptions. All logs are displayed in the console, and saved in <em>debug.log</em> file.</p>
+<p>On Heroku, you can monitor the logs by clicking on <em>More -&gt; View Logs</em> on the top left of your application dashboard.</p>
+<div class="pilwrap" id="support">
+  <h2>
+    <a href="#support" name="support" class="pilcrow"></a>
+Support <a name="support"></a>
+  </h2>
+</div>
+<p>I've written this script in my free time during my studies. If you find it useful, please support the project by spreading the word.</p>
+<div class="pilwrap" id="contribute">
+  <h2>
+    <a href="#contribute" name="contribute" class="pilcrow"></a>
+Contribute <a name="contribute"></a>
+  </h2>
+</div>
+<p>Contribute by creating new issues, sending pull requests on Github or you can send an email at: omar.elgabry.93@gmail.com</p>
+<div class="pilwrap" id="license">
+  <h2>
+    <a href="#license" name="license" class="pilcrow"></a>
+License <a name="license"></a>
+  </h2>
+</div>
+<p>Built under <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a> license.</p>
+</div>
+  </div>
+</body>
+</html>

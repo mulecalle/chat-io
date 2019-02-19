@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>user.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "app\\models\\user.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>user.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">var</span> userModel = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../database'</span>).models.user;
+
+<span class="hljs-keyword">var</span> create = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, callback</span>)</span>{
+	<span class="hljs-keyword">var</span> newUser = <span class="hljs-keyword">new</span> userModel(data);
+	newUser.save(callback);
+};
+
+<span class="hljs-keyword">var</span> findOne = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data, callback</span>)</span>{
+	userModel.findOne(data, callback);
+}
+
+<span class="hljs-keyword">var</span> findById = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">id, callback</span>)</span>{
+	userModel.findById(id, callback);
+}
+
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>Find a user, and create one if doesn't exist already.
+This method is used ONLY to find user accounts registered via Social Authentication.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> findOrCreate = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data, callback</span>)</span>{
+	findOne({<span class="hljs-string">'socialId'</span>: data.id}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, user</span>)</span>{
+		<span class="hljs-keyword">if</span>(err) { <span class="hljs-keyword">return</span> callback(err); }
+		<span class="hljs-keyword">if</span>(user){
+			<span class="hljs-keyword">return</span> callback(err, user);
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">var</span> userData = {
+				<span class="hljs-attr">username</span>: data.displayName,
+				<span class="hljs-attr">socialId</span>: data.id,
+				<span class="hljs-attr">picture</span>: data.photos[<span class="hljs-number">0</span>].value || <span class="hljs-literal">null</span>
+			};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>To avoid expired Facebook CDN URLs
+Request user's profile picture using user id
+@see http://stackoverflow.com/a/34593933/6649553</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">			<span class="hljs-keyword">if</span>(data.provider == <span class="hljs-string">"facebook"</span> &amp;&amp; userData.picture){
+				userData.picture = <span class="hljs-string">"http://graph.facebook.com/"</span> + data.id + <span class="hljs-string">"/picture?type=large"</span>;
+			}
+
+			create(userData, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, newUser</span>)</span>{
+				callback(err, newUser);
+			});
+		}
+	});
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<div class="dox">
+<div class="summary">
+<p>A middleware allows user to get access to pages ONLY if the user is already logged in.</p>
+</div>
+<div class="body">
+</div>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">var</span> isAuthenticated = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res, next</span>) </span>{
+	<span class="hljs-keyword">if</span>(req.isAuthenticated()){
+		next();
+	}<span class="hljs-keyword">else</span>{
+		res.redirect(<span class="hljs-string">'/'</span>);
+	}
+}
+
+<span class="hljs-built_in">module</span>.exports = { 
+	create, 
+	findOne, 
+	findById, 
+	findOrCreate, 
+	isAuthenticated 
+};
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
