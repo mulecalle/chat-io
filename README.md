@@ -15,7 +15,7 @@ A Real Time Chat Application built using Node.js, Express, Mongoose, Socket.io, 
 + [Support](#support)
 + [Contribute](#contribute)
 + [License](#license)
-+ [How to test]
++ How to test
 
 ## Demo<a name="demo"></a>
 Check [Demo](http://chatio.herokuapp.com/)
@@ -173,8 +173,15 @@ Built under [MIT](http://www.opensource.org/licenses/mit-license.php) license.
 ## How to test<a name="How to test"></a>
 
 	Install Zalenium: https://github.com/zalando/zalenium
-	Execute:
-	 	docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
 
-	Execute:
-		npm test
+	Run Zalenium:
+
+	```
+	 	docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
+	```
+
+	Execute test:
+
+	```
+	npm test
+	```
