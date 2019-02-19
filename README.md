@@ -176,7 +176,7 @@ Built under [MIT](http://www.opensource.org/licenses/mit-license.php) license.
 2. Run Zalenium:
 
 	```
-	 	docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
+	docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
 	```
 
 3. Execute test:
