@@ -172,15 +172,14 @@ Built under [MIT](http://www.opensource.org/licenses/mit-license.php) license.
 
 ## How to test<a name="How to test"></a>
 
-	Install Zalenium: https://github.com/zalando/zalenium
-
-	Run Zalenium:
+1. Install Zalenium: (https://github.com/zalando/zalenium)
+2. Run Zalenium:
 
 	```
 	 	docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start
 	```
 
-	Execute test:
+3. Execute test:
 
 	```
 	npm test
